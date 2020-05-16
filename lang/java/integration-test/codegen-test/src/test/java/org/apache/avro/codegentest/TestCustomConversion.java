@@ -58,4 +58,11 @@ public class TestCustomConversion extends AbstractSpecificRecordTest {
 
     verifySerDeAndStandardMethods(instanceOfGeneratedClass);
   }
+
+  @Test
+  public void testCustomConversionWithCustomLogicalType() {
+    final CustomConversionWithLogicalTypes customConversionWithLogicalTypes = CustomConversionWithLogicalTypes
+        .newBuilder().setCustomEnum(new CustomEnumType("TWO")).build();
+    verifySerDeAndStandardMethods(customConversionWithLogicalTypes);
+  }
 }

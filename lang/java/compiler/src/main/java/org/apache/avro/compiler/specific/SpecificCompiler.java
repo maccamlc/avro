@@ -19,10 +19,10 @@ package org.apache.avro.compiler.specific;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.StringWriter;
+import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -30,8 +30,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -111,6 +111,7 @@ public class SpecificCompiler {
   private final SpecificData specificData = new SpecificData();
 
   private final Set<Schema> queue = new HashSet<>();
+  private final Map<String, String> registeredLogicalTypeFactories = new LinkedHashMap<>();
   private Protocol protocol;
   private VelocityEngine velocityEngine;
   private String templateDir;
@@ -288,6 +289,17 @@ public class SpecificCompiler {
     }
   }
 
+  public void addCustomLogicalType(String logicalTypeName, Class<?> logicalTypeFactoryClass) {
+    try {
+      final LogicalTypes.LogicalTypeFactory logicalTypeFactory = (LogicalTypes.LogicalTypeFactory) logicalTypeFactoryClass
+          .getDeclaredConstructor().newInstance();
+      LogicalTypes.register(logicalTypeName, logicalTypeFactory);
+      registeredLogicalTypeFactories.put(logicalTypeName, logicalTypeFactoryClass.getCanonicalName());
+    } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
+      throw new RuntimeException("Failed to instantiate logical type factory class " + logicalTypeFactoryClass, e);
+    }
+  }
+
   public Collection<String> getUsedConversionClasses(Schema schema) {
     LinkedHashMap<String, Conversion<?>> classnameToConversion = new LinkedHashMap<>();
     for (Conversion<?> conversion : specificData.getConversions()) {
@@ -300,6 +312,10 @@ public class SpecificCompiler {
       }
     }
     return result;
+  }
+
+  public Map<String, String> getRegisteredLogicalTypeFactories() {
+    return new LinkedHashMap<>(registeredLogicalTypeFactories);
   }
 
   private Set<String> getClassNamesOfPrimitiveFields(Schema schema) {

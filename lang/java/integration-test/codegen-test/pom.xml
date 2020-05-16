@@ -64,7 +64,11 @@
                 <conversion>org.apache.avro.codegentest.CustomDecimalConversion</conversion>
                 <conversion>org.apache.avro.codegentest.FixedSizeStringConversion</conversion>
                 <conversion>org.apache.avro.Conversions$UUIDConversion</conversion>
+                <conversion>org.apache.avro.codegentest.CustomEnumConversion</conversion>
               </customConversions>
+              <customLogicalTypes>
+                <custom-enum>org.apache.avro.codegentest.CustomEnumLogicalTypeFactory</custom-enum>
+              </customLogicalTypes>
             </configuration>
           </execution>
         </executions>
