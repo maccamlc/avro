@@ -26,9 +26,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.avro.LogicalTypes;
 import org.apache.avro.compiler.specific.SpecificCompiler;
@@ -193,17 +191,6 @@ public abstract class AbstractAvroMojo extends AbstractMojo {
    * @parameter default-value="false"
    */
   protected boolean enableDecimalLogicalType;
-
-  /**
-   * Any custom {@link org.apache.avro.LogicalTypes.LogicalTypeFactory} to
-   * register for consideration during code generation. The map key specifies the
-   * logical type name and value is the fully qualified class name of the Logical
-   * Type Factory. The classes must be on the classpath at compile time and
-   * whenever the Java objects are serialized.
-   *
-   * @parameter property="customLogicalTypes"
-   */
-  protected Map<String, String> customLogicalTypes = new LinkedHashMap<>();
 
   /**
    * The current Maven project.

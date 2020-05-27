@@ -23,7 +23,6 @@ import org.apache.avro.generic.GenericData.StringType;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLClassLoader;
-import java.util.Map;
 
 import org.apache.avro.Protocol;
 import org.apache.avro.compiler.specific.SpecificCompiler;
@@ -75,9 +74,6 @@ public class ProtocolMojo extends AbstractAvroMojo {
       classLoader = createClassLoader();
       for (String customConversion : customConversions) {
         compiler.addCustomConversion(classLoader.loadClass(customConversion));
-      }
-      for (Map.Entry<String, String> customLogicalType : customLogicalTypes.entrySet()) {
-        compiler.addCustomLogicalType(customLogicalType.getKey(), classLoader.loadClass(customLogicalType.getValue()));
       }
     } catch (DependencyResolutionRequiredException | ClassNotFoundException e) {
       throw new IOException(e);

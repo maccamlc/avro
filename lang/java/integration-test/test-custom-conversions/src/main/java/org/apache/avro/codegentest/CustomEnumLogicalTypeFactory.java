@@ -29,6 +29,11 @@ public class CustomEnumLogicalTypeFactory implements LogicalTypes.LogicalTypeFac
     return CUSTOM_ENUM;
   }
 
+  @Override
+  public String getTypeName() {
+    return "custom-enum";
+  }
+
   public static class CustomEnumLogicalType extends LogicalType {
 
     public CustomEnumLogicalType(String logicalTypeName) {

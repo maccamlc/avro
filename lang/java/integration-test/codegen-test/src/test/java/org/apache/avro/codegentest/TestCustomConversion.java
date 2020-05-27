@@ -19,6 +19,7 @@
 package org.apache.avro.codegentest;
 
 import org.apache.avro.LogicalTypes;
+import org.apache.avro.codegentest.testdata.CustomConversionWithLogicalTypes;
 import org.apache.avro.codegentest.testdata.LogicalTypesWithCustomConversion;
 import org.junit.BeforeClass;
 import org.junit.Test;

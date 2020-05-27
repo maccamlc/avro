@@ -42,6 +42,19 @@ public class LogicalTypes {
   /**
    * Register a logical type.
    *
+   * @param factory The logical type factory
+   *
+   * @throws NullPointerException if {@code factory} or
+   *                              {@code factory.getTypedName()} is {@code null}
+   */
+  public static void register(LogicalTypeFactory factory) {
+    Objects.requireNonNull(factory, "Logical type factory cannot be null");
+    register(factory.getTypeName(), factory);
+  }
+
+  /**
+   * Register a logical type.
+   *
    * @param logicalTypeName The logical type name
    * @param factory         The logical type factory
    *

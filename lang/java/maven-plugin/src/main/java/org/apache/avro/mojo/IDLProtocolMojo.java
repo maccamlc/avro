@@ -24,7 +24,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.avro.Protocol;
 import org.apache.avro.compiler.idl.Idl;
@@ -100,10 +99,6 @@ public class IDLProtocolMojo extends AbstractAvroMojo {
         compiler.setEnableDecimalLogicalType(enableDecimalLogicalType);
         for (String customConversion : customConversions) {
           compiler.addCustomConversion(projPathLoader.loadClass(customConversion));
-        }
-        for (Map.Entry<String, String> customLogicalType : customLogicalTypes.entrySet()) {
-          compiler.addCustomLogicalType(customLogicalType.getKey(),
-              projPathLoader.loadClass(customLogicalType.getValue()));
         }
         compiler.setOutputCharacterEncoding(project.getProperties().getProperty("project.build.sourceEncoding"));
         compiler.compileToDestination(null, outputDirectory);
